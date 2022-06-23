@@ -1,1 +1,14 @@
-# Neural_Network_Charity_Analysis
+# Neural Network Charity Analysis
+## Overview of the analysis
+In this analysis, I have been provided with a dataset of 34,000 organizations that have received funding from Alphabet Soup. After preprocessing and splitting the data into training sets and test sets, I have created a neural network machine learning model to analyze the data. The purpose of this model is to predict, with at least 75% accuracy, whether applicants will be successful if funded by Alphabet Soup. Using TensorFlow's Keras model, I have created and optimized a neural network model that attempts to do so.
+## Results
+- ***Data PreProcessing***
+  - The target variable for my model is "IS_SUCCESSFUL" 
+  - The features for my model are "APPLICATION_TYPE", "AFFILIATION", "CLASSIFICATION", "USE_CASE", "ORGANIZATION", "STATUS", "INCOME_AMT", and "SPECIAL_CONSIDERATIONS"
+  - The variables that were neither target nor feature, and were removed from the input data, are "EIN", "NAME", and "ASK_AMT"
+- ***Compiling, Training, and Evaluating the Model***
+  - My model had two hidden layers, the first having 8 neurons and the second having 5. Each of these layers used the "relu" activation because when I changed to other activations the model performed worse. I initially chose this model format because I felt that two layers and several neurons was a good starting point for complexity without causing overfitting.
+  - I was not able to achieve the target model performance. My closest testing accuracy was ~72%.
+  - I originally tried removing the ASK_AMT data from the input because it was full of outliers, and that raised the accuracy to its current level. I then tried changing the activation method of the model to see if that would improve accuracy enough to reach 75%, but the accuracy decreased with other activation methods. Next, I installed keras_tuner and ran it to find the best combination of hyperparameters for my model, but after nearly 200 trials, the best hyperparameters for the current input data still only produced 73% accuracy. Finally, I considered that maybe the ASK_AMT data was necessary but needed to be reformatted, so I sorted the values into bins based off of the Series' quartiles so that the data would be categorical and all of the outliers would be in one bin. This also failed to raise the accuracy.
+## Summary
+Overall, while my model came close to achieving the accuracy goal, it failed to meet it. Based off of the results of the keras tuner, I can assume with some confidence that the loss in accuracy is being caused by one of the input values. With the removal of the ASK_AMT variable from the dataset, all of the model's features, as well as the target variable, are classified as categorical data. Therefore, I recommend performing Pearson's chi-squared test on the data to see which features are independent of the target variable, and then rerun the current model with the independent variables removed from the input data. This should remove some of the "noise" from the dataset and help the model train for accuracy.
